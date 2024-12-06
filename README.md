@@ -61,7 +61,7 @@ This document provides a detailed explanation of the provided code files, which 
 
 ---
 
-## Main Application Code (`main.c`)
+## Main Application Code ('threads.c`)
 
 ### Features
 

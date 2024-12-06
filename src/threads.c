@@ -29,7 +29,7 @@ void side_thread(void *params)
     while (1) {
         vTaskDelay(100);  // Delay for 100 ticks (acts like a sleep)
         // Call the do_loop function with the shared semaphore, counter, and "side" identifier
-        do_loop(semaphore, &counter, "side", 500);  // Process the loop for the side thread
+        do_loop(semaphore, &counter, "Side Thread", 500);  // Process the loop for the side thread
     }
 }
 
@@ -42,7 +42,7 @@ void main_thread(void *params)
         
         vTaskDelay(100);  // Delay for 100 ticks
         // Call the do_loop function with the shared semaphore, counter, and "main" identifier
-        do_loop(semaphore, &counter, "main", 500);  // Process the loop for the main thread
+        do_loop(semaphore, &counter, "Main Thread", 500);  // Process the loop for the main thread
 
         // Toggle the 'on' variable (LED state)
         on = !on;

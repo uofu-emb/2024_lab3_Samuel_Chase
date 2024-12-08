@@ -14,6 +14,7 @@ Write unit tests.
 
 
 # Thread Status Screenshot
+![Application Screenshot](https://github.com/uofu-emb/2024_lab3_Samuel_Chase/blob/chase_branch1/helloworld_threads.png)
 
 # Thread Testing Screenshot
 ![Application Screenshot](https://github.com/uofu-emb/2024_lab3_Samuel_Chase/blob/chase_branch1/test_screenshot.png)

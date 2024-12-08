@@ -3,7 +3,7 @@
 ![example workflow](https://github.com/uofu-emb/2024_lab3_Samuel_Chase/actions/workflows/main.yml/badge.svg)
 
 # Lab 3 Threads (Sam Bosch, Chase Griswold)
-Full disclosure: Relied heavily on reference implemention, however, we extensively commented the code and documented the architecture and functionality in this README.
+Full disclosure: Relied heavily on reference implemention. We modified the code to toggle the LED on the main thread, and report temperature sensor readings on the side thread, as can be seen in the screenshot "thread status" below. The code has been extensively documented.
 
 # Objectives
 Setup the operating system.
@@ -12,9 +12,52 @@ Identify shared state and race conditions.
 Protect critical sections.
 Write unit tests.
 
-
 # Thread Status Screenshot
 ![Application Screenshot](https://github.com/uofu-emb/2024_lab3_Samuel_Chase/blob/chase_branch1/helloworld_threads.png)
+
+### 1. Initialization
+  - **Task Creation**: Sets up two FreeRTOS tasks:
+    - `main_thread`: Toggles an LED and performs periodic operations.
+    - `side_thread`: Reads and logs temperature data and performs additional operations.
+
+### 2. Temperature Measurement
+- **Function**: `read_temperature`
+  - Configures the ADC and reads the raw value from channel 4, which corresponds to the RP2040's built-in temperature sensor.
+  - Converts the raw ADC value to voltage using a calculated conversion factor for the 12-bit ADC.
+  - Uses the RP2040 datasheet formula to compute the temperature in degrees Celsius:
+    \[
+    \text{Temperature (°C)} = 27.0 - \frac{\text{Voltage} - 0.706}{0.001721}
+    \]
+
+  ### 3. Task 1: `main_thread`
+- Performs the following operations in an infinite loop:
+  - Toggles the onboard LED connected to `CYW43_WL_GPIO_LED_PIN` using `cyw43_arch_gpio_put`.
+  - Logs a message indicating the LED toggle action.
+  - Executes the `do_loop` function, passing the semaphore, a counter, and task-specific parameters.
+  - Waits for 100ms between iterations using `vTaskDelay`.
+
+### 4. Task 2: `side_thread`
+- Executes the following in an infinite loop:
+  - Reads the temperature using the `read_temperature` function.
+  - Logs the temperature data to the console.
+  - Executes the `do_loop` function with task-specific parameters.
+  - Delays for 100ms between iterations using `vTaskDelay`.
+
+## Code Structure
+
+| Component         | Description                                                                                      |
+|--------------------|--------------------------------------------------------------------------------------------------|
+| `main`            | Initializes peripherals, creates tasks, and starts the FreeRTOS scheduler.                      |
+| `main_thread`     | Toggles the LED and performs periodic operations using `do_loop`.                               |
+| `side_thread`     | Reads and logs temperature data and performs periodic operations using `do_loop`.               |
+| `read_temperature`| Reads the temperature sensor via ADC and calculates the temperature in °C.                      |
+| `do_loop`         | Synchronizes operations between tasks using the semaphore (functionality provided externally).  |
+
+## Peripherals and Features Used
+- **GPIO**: Toggles an onboard LED via CYW43 GPIO.
+- **ADC**: Reads raw values from the built-in temperature sensor.
+- **Semaphore**: Synchronizes operations between the `main_thread` and `side_thread`.
+- **FreeRTOS**: Manages multitasking and scheduling.
 
 # Thread Testing Screenshot
 ![Application Screenshot](https://github.com/uofu-emb/2024_lab3_Samuel_Chase/blob/chase_branch1/test_screenshot.png)

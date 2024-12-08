@@ -15,7 +15,7 @@ int do_loop(SemaphoreHandle_t semaphore,
     {
         // Increment the shared counter and print a message indicating the source
         (*counter)++;
-        printf("Hello-World from %s: Count %d\n", src, *counter);
+        printf("%s: Count %d\n", src, *counter);
     }
 
     // Release the semaphore after completing the task

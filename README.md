@@ -6,8 +6,6 @@
 - **NOTE**: The ADC is uncalibrated. I got similar readings on the Bluetooth Lab 11.
 - Full disclosure: Relied heavily on reference implemention. We modified the code to toggle the LED on the main thread, and report temperature sensor readings on the side thread, as can be seen in the screenshot "thread status" below. The code has been extensively documented.
 
-- There is a commented out attempt at testing the temp sensor functionality. I spent like 10 hours trying to get it to work, but was unfortunately unsuccessful. I'll continue to ask around for help with it (this is chase writing).
-
 # Objectives
 Setup the operating system.
 Setup multiple threads.

@@ -3,6 +3,7 @@
 ![example workflow](https://github.com/uofu-emb/2024_lab3_Samuel_Chase/actions/workflows/main.yml/badge.svg)
 
 # Lab 3 Threads (Sam Bosch, Chase Griswold)
+- **NOTE**: The ADC is uncalibrated. I got similar readings on the Bluetooth Lab 11.
 Full disclosure: Relied heavily on reference implemention. We modified the code to toggle the LED on the main thread, and report temperature sensor readings on the side thread, as can be seen in the screenshot "thread status" below. The code has been extensively documented.
 
 # Objectives
@@ -17,8 +18,8 @@ Write unit tests.
 
 ### 1. Initialization
   - **Task Creation**: Sets up two FreeRTOS tasks:
-    - `main_thread`: Toggles an LED and performs periodic operations.
-    - `side_thread`: Reads and logs temperature data and performs additional operations.
+    - `main_thread`: Toggles an LED and increments a counter.
+    - `side_thread`: Reads and logs temperature data and increments the shared counter.
 
 ### 2. Temperature Measurement
 - **Function**: `read_temperature`
@@ -119,7 +120,7 @@ This document provides a detailed explanation of the provided code files, which 
    - **`main_thread`:**  
      - Toggles an onboard LED and increments the counter in a loop using the semaphore.  
    - **`side_thread`:**  
-     - Periodically increments the shared counter in parallel with `main_thread`.  
+     - Increments the shared counter in parallel with `main_thread` and reports the temperature readings from the onboard temp sensor.  
 
 3. **Initialization and Scheduler Start**  
    - Initializes the semaphore, tasks, and scheduler.  

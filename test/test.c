@@ -7,6 +7,7 @@
 #include <pico/cyw43_arch.h>
 #include <unity.h>  // Include Unity for unit testing framework
 #include "loop.h"   // Custom loop functions and definitions
+#include "hardware/adc.h"
 
 // The test runner task has the highest priority.
 // In FreeRTOS, a higher number indicates a higher priority.
@@ -17,6 +18,20 @@ void setUp(void) {}
 
 // Required by Unity framework, called after each test
 void tearDown(void) {}
+
+// // Test case to check if the temperature reporting is working as expected.
+// //float read_temperature();
+// void test_temperature_reading(void)
+// {
+//     adc_init();
+//     adc_set_temp_sensor_enabled(true);
+
+//     float temperature = read_temperature();
+//     printf("Testing temperature: %.2f °C\n", temperature);
+
+//     // Check if temperature is in a reasonable range
+//     TEST_ASSERT_TRUE(temperature > -40.0 && temperature < 125.0);
+// }
 
 /**************** Activity 0-2 ****************/
 // Test case to check if the loop function blocks as expected
@@ -149,6 +164,7 @@ void runner_thread(__unused void *args)
         RUN_TEST(test_deadlock);
         RUN_TEST(test_orphaned);
         RUN_TEST(test_unorphaned);
+        //RUN_TEST(test_temperature_reading); //Temp Sensor Test
 
         UNITY_END();  // End Unity test framework
         sleep_ms(10000);  // Pause for 10 seconds before running tests again

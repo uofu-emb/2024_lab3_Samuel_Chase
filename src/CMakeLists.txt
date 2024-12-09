@@ -18,6 +18,7 @@ target_link_libraries(lab03 PRIVATE
   pico_multicore
   pico_async_context_freertos
   FreeRTOS-Kernel-Heap4
+  hardware_adc
 )
 
 # The CYW43 is the Wifi/Bluetooth module. If the board is set to pico_w, this

@@ -22,3 +22,5 @@ int do_loop(SemaphoreHandle_t semaphore,
 
 int unorphaned_lock(SemaphoreHandle_t semaphore, TickType_t timeout, int *counter);
 int orphaned_lock(SemaphoreHandle_t semaphore, TickType_t timeout, int *counter);
+
+//float read_temperature(); //added for temp testing
